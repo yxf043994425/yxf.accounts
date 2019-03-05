@@ -1,6 +1,4 @@
-import { ReadFile } from './utils/file';
+require('./env.js');
 
-console.log('file');
-ReadFile('./docs/项目需求分解说明.md', (data) => {
-  console.log(data);
-})
+require('./src/process/account.process').run();
+require('./src/process/test.process').run();

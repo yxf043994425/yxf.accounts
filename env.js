@@ -1,0 +1,3 @@
+global.env = {
+  src: './data'
+}
