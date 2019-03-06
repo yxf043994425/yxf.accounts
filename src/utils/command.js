@@ -7,10 +7,8 @@ let commanding = false;
 
 function GetReadLine() {
   if (rl) {
-    console.log('rl-exist');
     return rl;
   } else {
-    console.log('rl-no-exist');
     return rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
@@ -20,6 +18,10 @@ function GetReadLine() {
 
 exports.CommandErr = (err) => {
   message.ShowError(err);
+  this.CommandExit();
+}
+
+exports.CommandExit = () =>{
   if (rl) {
     rl.close();
   }
