@@ -49,7 +49,12 @@ function GetAccountPath() {
 exports.Login = function (password) {
   return new Promise((resolve, reject) => {
     if (SaveAccountKey(password)) {
-      FILE.ReadFile(GetAccountPath()).then(data => resolve(data)).catch(err => reject(new Error(ERR.ERR_CODE.ERR_NO_FILE)));
+      FILE.ReadFile(GetAccountPath())
+        .then(data => {
+          _user = JSON.parse(DecryptFile(data.toString()));
+          resolve(data);
+        })
+        .catch(err => reject(new Error(ERR.ERR_CODE.ERR_NO_FILE)));
     } else {
       reject(new Error(ERR.ERR_CODE.ERR_NO_ACCOUNT));
     }
@@ -61,6 +66,20 @@ exports.Register = function () {
     _user = {
       name: _key
     };
-    FILE.WriteFile(GetAccountPath(), EncryptFile(_user)).then(data => resolve(data)).catch(err => reject(err));
+    this.SaveUser()
+      .then(data => resolve(data))
+      .catch(err => reject(err));
   })
+}
+
+exports.SaveUser = function () {
+  return new Promise((resolve, reject) => {
+    FILE.WriteFile(GetAccountPath(), EncryptFile(_user))
+      .then(data => resolve(data))
+      .catch(err => reject(err));
+  })
+}
+
+exports.GetUsre = function () {
+  return _user;
 }

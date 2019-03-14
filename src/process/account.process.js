@@ -10,6 +10,7 @@ const _commands = {
   LOGIN: { file: 'login.js'},
   REGISTER: {file: 'register.js'},
   REMOVE: { file: 'remove.js'},
+  SAVE: { file: 'save.js'},
 }
 
 function Commanding(command) {
